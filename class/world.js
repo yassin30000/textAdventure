@@ -13,7 +13,7 @@ class World {
         const itemList = worldData.items;
 
         // Instantiate new room objects
-        // Get name, id and description from room data
+        // Get name, id and description fro m room data
         for (let i = 0 ; i < roomList.length ; i++) {
 
             let roomData = roomList[i];
@@ -41,7 +41,16 @@ class World {
             // A non-food item should be instantiated as an instance of the `Item` class
             // A food item should be instantiated as an instance of the `Food` class
 
-        // Your code here
+        for (let item of itemList) {
+            if (item.isFood) {
+                let newFood = new Food (item.name, item.description);
+                this.rooms[item.room].items.push(newFood)
+            }
+            else {
+                let newItem = new Item (item.name,item.description);
+                this.rooms[item.room].items.push(newItem);
+            }
+        }
     }
 }
 

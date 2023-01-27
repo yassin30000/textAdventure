@@ -1,4 +1,5 @@
 const { Food } = require('./food');
+const { Room } = require('./room');
 
 class Player {
 
@@ -36,25 +37,50 @@ class Player {
     takeItem(itemName) {
         // Picks up an item from the current room into the player's inventory
 
-        // Your code here
+        for (let item of this.currentRoom.items) {
+            if (item.name == itemName) {
+                this.items.push(item);
+                this.currentRoom.items.splice(this.currentRoom.items.indexOf(item), 1);
+            }
+        }
     }
 
     dropItem(itemName) {
         // Drops an item the player is holding into their current room
 
-        // Your code here
+        for (let item of this.items) {
+            if (item.name === itemName) {
+                console.log(`${this.name} dropped the ${item.name}`);
+                this.currentRoom.items.push(item);
+                this.items.splice(this.items.indexOf(item), 1);
+            }
+            else console.log(`huh?`);
+        }
     }
 
     eatItem(itemName) {
         // Allow the player to eat food items, but not non-food items
-
-        // Your code here
+        for (let item of this.items) {
+            if (item.name === itemName) {
+                if(item instanceof Food) {
+                    console.log(`${this.name} ate the ${item.name}`);
+                    this.items.splice(this.items.indexOf(item), 1);
+                }
+                else {
+                    console.log(`You can't eat the ${item.name}!`);
+                }
+            }
+        }
+        
     }
 
     getItemByName(name) {
         // Retrieves an item from a player's inventory by item name
-
-        // Your code here
+        for (let item of this.items) {
+            if (item.name === name) {
+                return item;
+            }
+        }
     }
 }
 
